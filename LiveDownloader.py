@@ -26,7 +26,10 @@ class LiveDownloader():
         
     def monitorStream(self):
         while True:
-            self.downloadStream()
+            try:
+                self.downloadStream()
+            except Exception as e:
+                print(e)
             sleep(self.delay)
 
 
