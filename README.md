@@ -9,9 +9,9 @@ This will install the python package `streamlink` and grab the executable `ytarc
 # Usage
 To run you will need to navigate the channel you want to download from, `https://www.youtube.com/@LofiGirl`. Then take only the username at the end of the url which is `LofiGirl`. Then use the program like this
 ```
-python LiveDownloader -u LofiGirl
+python LiveDownloader.py -u LofiGirl
 ```
 or
 ```
-python LiveDownloader --user LofiGirl
+python LiveDownloader.py --user LofiGirl
 ```
