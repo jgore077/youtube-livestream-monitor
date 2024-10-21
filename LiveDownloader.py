@@ -1,28 +1,21 @@
-import streamlink
-import subprocess
-import argparse
-from streamlink.stream import *
+from url import getLiveUrl
 from time import sleep
+import subprocess
+import requests
+import argparse
 
 class LiveDownloader():
-    def __init__(self,user:str,delay:int=30) -> None:
+    def __init__(self,id:str,delay:int=30) -> None:
         self.delay=delay
-        self.user=user
-        self.link=f'https://www.youtube.com/@{user}'
+        self.id=id
     
-    def getStreams(self):
-        return streamlink.streams(self.link)
     
     def downloadStream(self):
-        streams=self.getStreams()
-        stream=streams["best"]
-        if (type(stream)==HLSStream):
-            print('Start recording')
-            urlarray=stream.url.split('/')
-            streamurl=urlarray[urlarray.index('id')+1].split('.')[0]
-            subprocess.run(['./ytarchive','--merge','-o' ,'streams/',f'https://www.youtube.com/watch?v={streamurl}','best'])
+        url=getLiveUrl(self.id)
+        if url:
+            subprocess.run(['./ytarchive','--merge','-o' ,'streams/',url,'best'])
             return
-        print(f'{self.user} is offline')    
+        print(f'No stream to download')    
         
     def monitorStream(self):
         while True:
@@ -37,9 +30,9 @@ if __name__=="__main__":
     
     parser = argparse.ArgumentParser(
                     prog='Monitoring Livestream Archiver',
-                    description='Given a username this program will watch that users Youtube account and download their livestreams',)
-    parser.add_argument('-u', '--user',required=True)
+                    description='Given a channel id this program will watch that users Youtube account and download their livestreams whenever they go live',)
+    parser.add_argument('-i', '--id',required=True)
     args = parser.parse_args()
       
-    downloader=LiveDownloader(args.user)
+    downloader=LiveDownloader(args.id)
     downloader.monitorStream()
