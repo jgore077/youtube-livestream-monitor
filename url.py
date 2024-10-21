@@ -22,5 +22,3 @@ def getLiveUrl(channelId:str)->str:
             return element['href']
     
     return None
-
-print(getLiveUrl("UCq6VFHwMzcMXbuKyG7SQYIg"))
