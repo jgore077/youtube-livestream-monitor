@@ -13,7 +13,7 @@ class LiveDownloader():
     def downloadStream(self):
         url=getLiveUrl(self.id)
         if url:
-            subprocess.run(['./ytarchive','--merge','-o','streams',url,'best'])
+            subprocess.run(['./ytarchive','--merge','-o','streams/%(channel)s/%(title)s-%(id)s-%(url)s-%(start_date)s',url,'best'])
             return
         print(f'No stream to download, waiting {self.delay} seconds before checking again')    
         
