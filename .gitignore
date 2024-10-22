@@ -1,2 +1,5 @@
 ytarchive
 streams/
+__pycache__
+*.state
+cache.json
