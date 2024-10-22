@@ -1,17 +1,16 @@
 from url import getLiveUrl
 from time import sleep
 import subprocess
-import requests
 import argparse
 
 class LiveDownloader():
-    def __init__(self,id:str,delay:int=30) -> None:
+    def __init__(self,channel:str,delay:int=30) -> None:
         self.delay=delay
-        self.id=id
+        self.channel=channel
     
     
     def downloadStream(self):
-        url=getLiveUrl(self.id)
+        url=getLiveUrl(self.channel)
         if url:
             subprocess.run(['./ytarchive','--merge','-o','streams/%(channel)s/%(title)s-%(id)s-%(url)s-%(start_date)s',url,'best'])
             return
@@ -30,9 +29,9 @@ if __name__=="__main__":
     
     parser = argparse.ArgumentParser(
                     prog='Monitoring Livestream Archiver',
-                    description='Given a channel id this program will watch that users Youtube account and download their livestreams whenever they go live',)
-    parser.add_argument('-i', '--id',required=True)
+                    description='Given a channel name this program will watch that users Youtube account and download their livestreams whenever they go live',)
+    parser.add_argument('-c', '--channel',required=True)
     args = parser.parse_args()
       
-    downloader=LiveDownloader(args.id)
+    downloader=LiveDownloader(args.channel)
     downloader.monitorStream()
